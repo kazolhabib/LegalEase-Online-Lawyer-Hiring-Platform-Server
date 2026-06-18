@@ -6,7 +6,7 @@ The backend REST API for the **LegalEase – Online Lawyer Hiring Platform**. Bu
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 - **JWT Authentication** – Secure registration, login, and Google OAuth endpoints with 7-day token expiry.
 - **Role-Based Access** – Middleware-protected routes for User, Lawyer, and Admin roles.
@@ -20,7 +20,7 @@ The backend REST API for the **LegalEase – Online Lawyer Hiring Platform**. Bu
 
 ---
 
-## 📦 NPM Packages Used
+## NPM Packages Used
 
 | Package | Purpose |
 |---------|---------|
