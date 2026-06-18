@@ -32,7 +32,10 @@ router.post('/', [auth, role(['user'])], async (req, res) => {
     res.status(201).json(hiringRequest);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Lawyer profile not found' });
+    }
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -54,7 +57,7 @@ router.get('/client', [auth, role(['user'])], async (req, res) => {
     res.json(hires);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -76,7 +79,7 @@ router.get('/lawyer', [auth, role(['lawyer'])], async (req, res) => {
     res.json(requests);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -112,7 +115,7 @@ router.patch('/:id/status', [auth, role(['lawyer'])], async (req, res) => {
     res.json(hiringRequest);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 

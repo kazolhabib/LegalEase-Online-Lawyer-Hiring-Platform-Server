@@ -76,7 +76,10 @@ router.post('/', [auth, role(['user'])], async (req, res) => {
     res.status(201).json(comment);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Lawyer profile not found' });
+    }
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -92,7 +95,7 @@ router.get('/lawyer/:lawyerId', async (req, res) => {
     res.json(comments);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -114,7 +117,7 @@ router.get('/my-comments', auth, async (req, res) => {
     res.json(comments);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -150,7 +153,7 @@ router.put('/:id', auth, async (req, res) => {
     res.json(comment);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -178,7 +181,7 @@ router.delete('/:id', auth, async (req, res) => {
     res.json({ msg: 'Comment removed successfully' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 

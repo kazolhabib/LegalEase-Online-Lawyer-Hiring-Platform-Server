@@ -70,7 +70,7 @@ router.post('/create-checkout-session', auth, async (req, res) => {
     res.json({ id: session.id, url: session.url });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -120,7 +120,7 @@ router.post('/mock-pay', auth, async (req, res) => {
     res.json({ msg: 'Mock Payment Successful', status: 'paid', transaction: newTx });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 

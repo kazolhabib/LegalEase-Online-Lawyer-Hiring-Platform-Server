@@ -52,28 +52,29 @@ The backend REST API for the **LegalEase – Online Lawyer Hiring Platform**. Bu
 - `DELETE /:id` – Delete lawyer profile
 
 ### Hires (`/api/hires`)
-- `POST /` – Create hiring request
-- `GET /user` – Get user's hiring history
-- `GET /lawyer` – Get lawyer's incoming requests
-- `PUT /:id` – Accept or reject hiring request
+- `POST /` – Create hiring request (User role)
+- `GET /client` – Get user's hiring history (User role)
+- `GET /lawyer` – Get lawyer's incoming requests (Lawyer role)
+- `PATCH /:id/status` – Accept or reject hiring request (Lawyer role)
 
 ### Payments (`/api/payments`)
-- `POST /create-checkout` – Create Stripe checkout session
+- `POST /create-checkout-session` – Create Stripe checkout session
 - `POST /mock-pay` – Mock payment for testing
-- `GET /transactions` – Get all transactions (Admin)
+- `POST /webhook` – Stripe webhook endpoint
 
 ### Comments (`/api/comments`)
-- `POST /` – Create comment on a lawyer
-- `GET /lawyer/:id` – Get comments for a lawyer
-- `GET /user` – Get user's own comments
-- `PUT /:id` – Update comment
-- `DELETE /:id` – Delete comment
+- `POST /` – Create comment on a lawyer (requires paid hire)
+- `GET /lawyer/:lawyerId` – Get all comments for a lawyer
+- `GET /my-comments` – Get logged-in user's own comments
+- `PUT /:id` – Update own comment
+- `DELETE /:id` – Delete own comment
 
 ### Admin (`/api/admin`)
 - `GET /users` – List all users
-- `PUT /users/:id/role` – Change user role
-- `DELETE /users/:id` – Delete user
-- `GET /analytics` – Platform analytics
+- `PATCH /users/:id/role` – Change user role
+- `DELETE /users/:id` – Delete user and related data
+- `GET /transactions` – View all transaction logs
+- `GET /analytics` – Platform analytics (totals & revenue)
 
 ---
 

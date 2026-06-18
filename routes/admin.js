@@ -19,7 +19,7 @@ router.get('/users', async (req, res) => {
     res.json(users);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -50,7 +50,7 @@ router.patch('/users/:id/role', async (req, res) => {
     res.json({ msg: `User role successfully changed to ${newRole}`, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -76,7 +76,7 @@ router.delete('/users/:id', async (req, res) => {
     res.json({ msg: 'User and all related records removed successfully' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -89,7 +89,7 @@ router.get('/transactions', async (req, res) => {
     res.json(transactions);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -114,7 +114,7 @@ router.get('/analytics', async (req, res) => {
     });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 

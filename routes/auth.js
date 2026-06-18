@@ -51,7 +51,7 @@ router.post('/register', async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -95,7 +95,7 @@ router.post('/login', async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -103,23 +103,45 @@ router.post('/login', async (req, res) => {
 // @desc    Google OAuth login/register callback handler
 // @access  Public
 router.post('/google', async (req, res) => {
-  const { name, email, avatar } = req.body;
+  const { idToken } = req.body;
 
-  if (!email) {
-    return res.status(400).json({ msg: 'Google auth requires an email' });
+  if (!idToken) {
+    return res.status(400).json({ msg: 'Google auth requires an idToken' });
   }
 
   try {
+    // Verify token with Google's API
+    const googleRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${idToken}`);
+    if (!googleRes.ok) {
+      return res.status(400).json({ msg: 'Invalid Google token' });
+    }
+    const tokenInfo = await googleRes.json();
+
+    // Verify client_id matches
+    const clientId = process.env.GOOGLE_CLIENT_ID || '810619721461-16ub90cr5ivqb12s8o5mvjm8mss0n9kq.apps.googleusercontent.com';
+    if (tokenInfo.aud !== clientId) {
+      return res.status(400).json({ msg: 'Google token audience mismatch' });
+    }
+
+    const { email, name, picture } = tokenInfo;
+    if (!email) {
+      return res.status(400).json({ msg: 'Google auth did not return an email' });
+    }
+
     let user = await User.findOne({ email });
 
     if (!user) {
-      // Create user with a dummy hashed password
+      // Create user
       user = new User({
         name: name || 'Google User',
         email,
-        avatar: avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150&h=150',
+        avatar: picture || '',
         password: await bcrypt.hash(Math.random().toString(36).slice(-10), 10),
       });
+      await user.save();
+    } else if (picture && !user.avatar) {
+      // Update avatar if they didn't have one before
+      user.avatar = picture;
       await user.save();
     }
 
@@ -142,7 +164,7 @@ router.post('/google', async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -155,7 +177,7 @@ router.get('/profile', auth, async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -177,7 +199,7 @@ router.put('/profile', auth, async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
@@ -218,7 +240,7 @@ router.put('/role', auth, async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 });
 
