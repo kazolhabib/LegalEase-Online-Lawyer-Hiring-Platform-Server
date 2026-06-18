@@ -103,7 +103,7 @@ npm run dev
 
 ---
 
-## 🔗 Links
+## Links
 
 - **Client Repository:** [GitHub – Client](https://github.com/kazolhabib/LegalEase-Online-Lawyer-Hiring-Platform)
 - **Server Repository:** [GitHub – Server](https://github.com/kazolhabib/LegalEase-Online-Lawyer-Hiring-Platform-Server)
