@@ -78,7 +78,7 @@ The backend REST API for the **LegalEase – Online Lawyer Hiring Platform**. Bu
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 git clone https://github.com/kazolhabib/LegalEase-Online-Lawyer-Hiring-Platform-Server.git
