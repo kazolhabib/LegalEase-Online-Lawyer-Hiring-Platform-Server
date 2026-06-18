@@ -96,7 +96,7 @@ router.get('/:id', async (req, res) => {
 
 // @route   POST api/lawyers
 // @desc    Create or update current lawyer's profile
-// @access  Private (Role: lawyer)
+// @access  Private Role: lawyer
 router.post('/', [auth, role(['lawyer'])], async (req, res) => {
   const { bio, specialization, rate, image, status, badge } = req.body;
 
