@@ -35,7 +35,7 @@ The backend REST API for the **LegalEase – Online Lawyer Hiring Platform**. Bu
 
 ---
 
-## 🛠 API Endpoints
+## API Endpoints
 
 ### Authentication (`/api/auth`)
 - `POST /register` – Register new user
