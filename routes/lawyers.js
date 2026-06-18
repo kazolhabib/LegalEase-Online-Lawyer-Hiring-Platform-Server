@@ -75,7 +75,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// @route   GET api/lawyers/:id
+// @route   GET api/lawyers/id
 // @desc    Get a single lawyer profile
 // @access  Public
 router.get('/:id', async (req, res) => {
