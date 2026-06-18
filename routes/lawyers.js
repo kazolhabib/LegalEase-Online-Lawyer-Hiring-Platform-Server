@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
       if (rateMax) filterQuery.rate.$lte = Number(rateMax);
     }
 
-    // Global Search across Name, Specialization, and Bio
+    // Global Search across Name, Specialization and Bio
     if (search) {
       // First, find user IDs whose names match the search query
       const users = await User.find({ name: { $regex: new RegExp(search, 'i') } });
