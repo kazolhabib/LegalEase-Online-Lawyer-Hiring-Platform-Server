@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
     const totalCount = await LawyerProfile.countDocuments(filterQuery);
 
     // Apply Sorting
-    let sortOptions = { dateJoined: -1 }; // default: latest joined
+    let sortOptions = { dateJoined: -1 };
     if (sort === 'rate_asc') sortOptions = { rate: 1 };
     if (sort === 'rate_desc') sortOptions = { rate: -1 };
     if (sort === 'rating') sortOptions = { ratingAverage: -1 };
