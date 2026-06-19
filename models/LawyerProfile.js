@@ -47,6 +47,18 @@ const LawyerProfileSchema = new mongoose.Schema({
     type: Number,
     default: 5.0,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  isPublished: {
+    type: Boolean,
+    default: true,
+  },
+  hiresCount: {
+    type: Number,
+    default: 0,
+  },
   dateJoined: {
     type: Date,
     default: Date.now,

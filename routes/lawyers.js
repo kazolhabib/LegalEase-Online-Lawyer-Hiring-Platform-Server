@@ -9,10 +9,16 @@ const User = require('../models/User');
 // @desc    Get all lawyer profiles with filtering, sorting, pagination
 // @access  Public
 router.get('/', async (req, res) => {
-  const { search, specialization, status, rateMin, rateMax, page = 1, limit = 6, sort } = req.query;
+  const { search, specialization, status, rateMin, rateMax, page = 1, limit = 6, sort, includeUnpublished } = req.query;
 
   try {
     let filterQuery = {};
+
+    // Default filters to only show verified & published lawyer profiles
+    if (includeUnpublished !== 'true') {
+      filterQuery.isVerified = true;
+      filterQuery.isPublished = true;
+    }
 
     // Direct Specialization Filter
     if (specialization) {
@@ -52,6 +58,7 @@ router.get('/', async (req, res) => {
     if (sort === 'rate_asc') sortOptions = { rate: 1 };
     if (sort === 'rate_desc') sortOptions = { rate: -1 };
     if (sort === 'rating') sortOptions = { ratingAverage: -1 };
+    if (sort === 'hires_desc') sortOptions = { hiresCount: -1 };
 
     // Fetch matching lawyer profiles
     const lawyers = await LawyerProfile.find(filterQuery)
@@ -98,7 +105,7 @@ router.get('/:id', async (req, res) => {
 // @desc    Create or update current lawyer's profile
 // @access  Private Role: lawyer
 router.post('/', [auth, role(['lawyer'])], async (req, res) => {
-  const { bio, specialization, rate, image, status, badge } = req.body;
+  const { bio, specialization, rate, image, status, badge, isPublished } = req.body;
 
   if (!bio || !specialization || rate === undefined || !image) {
     return res.status(400).json({ msg: 'Please provide all required profile fields' });
@@ -114,6 +121,7 @@ router.post('/', [auth, role(['lawyer'])], async (req, res) => {
 
   if (status) profileFields.status = status;
   if (badge) profileFields.badge = badge;
+  if (isPublished !== undefined) profileFields.isPublished = isPublished;
 
   try {
     let profile = await LawyerProfile.findOne({ user: req.user.id });
@@ -125,13 +133,19 @@ router.post('/', [auth, role(['lawyer'])], async (req, res) => {
         { $set: profileFields },
         { new: true }
       ).populate('user', 'name email avatar');
+      
+      console.log(`Dummy Email Sent to lawyer (${req.user.email}): Your Legal Profile has been updated successfully.`);
+      
       return res.json(profile);
     }
 
-    // Create a new lawyer profile
+    // Create a new lawyer profile (defaults to isVerified: false)
     profile = new LawyerProfile(profileFields);
     await profile.save();
     profile = await LawyerProfile.findById(profile._id).populate('user', 'name email avatar');
+    
+    console.log(`Dummy Email Sent to lawyer (${req.user.email}): Your new Legal Profile has been published successfully.`);
+    
     res.status(201).json(profile);
   } catch (err) {
     console.error(err.message);

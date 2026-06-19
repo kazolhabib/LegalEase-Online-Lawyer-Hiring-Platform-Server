@@ -118,4 +118,58 @@ router.get('/analytics', async (req, res) => {
   }
 });
 
+// @route   GET api/admin/lawyers
+// @desc    Get all lawyer profiles (including unverified & unpublished ones)
+// @access  Private (Admin only)
+router.get('/lawyers', async (req, res) => {
+  try {
+    const lawyers = await LawyerProfile.find()
+      .populate('user', 'name email avatar')
+      .sort({ dateJoined: -1 });
+    res.json(lawyers);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route   PATCH api/admin/lawyers/:id/publish
+// @desc    Toggle lawyer publication status
+// @access  Private (Admin only)
+router.patch('/lawyers/:id/publish', async (req, res) => {
+  const { isPublished } = req.body;
+  if (isPublished === undefined) {
+    return res.status(400).json({ msg: 'Please provide isPublished state' });
+  }
+  try {
+    const lawyer = await LawyerProfile.findById(req.params.id);
+    if (!lawyer) {
+      return res.status(404).json({ msg: 'Lawyer profile not found' });
+    }
+    lawyer.isPublished = isPublished;
+    await lawyer.save();
+    res.json({ msg: `Lawyer publication status changed to ${isPublished}`, lawyer });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
+// @route   DELETE api/admin/lawyers/:id
+// @desc    Delete a lawyer profile
+// @access  Private (Admin only)
+router.delete('/lawyers/:id', async (req, res) => {
+  try {
+    const lawyer = await LawyerProfile.findById(req.params.id);
+    if (!lawyer) {
+      return res.status(404).json({ msg: 'Lawyer profile not found' });
+    }
+    await LawyerProfile.findByIdAndDelete(req.params.id);
+    res.json({ msg: 'Lawyer profile removed successfully' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: 'Server error' });
+  }
+});
+
 module.exports = router;

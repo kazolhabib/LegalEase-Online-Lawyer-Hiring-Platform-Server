@@ -128,9 +128,11 @@ router.post('/google', async (req, res) => {
       return res.status(400).json({ msg: 'Google auth did not return an email' });
     }
 
+    let isNewUser = false;
     let user = await User.findOne({ email });
 
     if (!user) {
+      isNewUser = true;
       // Create user
       user = new User({
         name: name || 'Google User',
@@ -159,7 +161,7 @@ router.post('/google', async (req, res) => {
       { expiresIn: '7d' },
       (err, token) => {
         if (err) throw err;
-        res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role, avatar: user.avatar } });
+        res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role, avatar: user.avatar }, isNewUser });
       }
     );
   } catch (err) {
