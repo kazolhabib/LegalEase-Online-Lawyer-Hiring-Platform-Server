@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const User = require('./models/User');
 const LawyerProfile = require('./models/LawyerProfile');
 const Comment = require('./models/Comment');
+const HiringRequest = require('./models/HiringRequest');
+const Transaction = require('./models/Transaction');
 
 dotenv.config();
 
@@ -18,7 +20,9 @@ const seedData = async () => {
     await User.deleteMany({});
     await LawyerProfile.deleteMany({});
     await Comment.deleteMany({});
-    console.log('Cleared existing database entries...');
+    await HiringRequest.deleteMany({});
+    await Transaction.deleteMany({});
+    console.log('Cleared existing database entries (Users, Profiles, Comments, HiringRequests, Transactions)...');
 
     const salt = await bcrypt.genSalt(10);
     const defaultPassword = await bcrypt.hash('123456', salt);
@@ -246,7 +250,7 @@ const seedData = async () => {
         ratingAverage: 4.9,
         reviewsCount: 1,
         status: 'Available',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&h=533',
+        image: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&q=80&w=400&h=533',
         badge: 'Constitutional Expert',
         bio: 'Dr. Shahdeen Malik is a veteran lawyer, legal commentator, and civil litigator. He specializes in civil writs, contract laws, and service matters. He holds degrees from universities in the US and Russia, bringing a global perspective.',
         dateJoined: new Date('2019-10-15T00:00:00.000Z')
@@ -261,7 +265,7 @@ const seedData = async () => {
         ratingAverage: 4.8,
         reviewsCount: 1,
         status: 'Available',
-        image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400&h=533',
+        image: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=400&h=533',
         badge: 'Tax Advisor',
         bio: 'Advocate Masud Khan is a corporate tax advisor helping clients with VAT compliance, customs duties, income tax assessments, and tax appeals. He has over 15 years of experience advising manufacturing and export industries.',
         dateJoined: new Date('2020-03-12T00:00:00.000Z')
@@ -274,7 +278,7 @@ const seedData = async () => {
         ratingAverage: 4.7,
         reviewsCount: 1,
         status: 'Available',
-        image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=533',
+        image: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=400&h=533',
         badge: 'Audit Consultant',
         bio: 'Advocate Farzana Begum represents individuals and corporations in transfer pricing cases, corporate tax structures, and tax tribunals. She is a double degree holder in finance and law, offering holistic business advisory.',
         dateJoined: new Date('2021-08-01T00:00:00.000Z')
@@ -287,7 +291,7 @@ const seedData = async () => {
         ratingAverage: 4.9,
         reviewsCount: 1,
         status: 'Busy',
-        image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400&h=533',
+        image: 'https://images.unsplash.com/photo-1489980508314-941910ded1f4?auto=format&fit=crop&q=80&w=400&h=533',
         badge: 'VAT Specialist',
         bio: 'Advocate M. A. Halim specializes in tax disputes, corporate auditing, VAT, and wealth statements. He is also a writer of popular legal textbooks and guides on tax laws in Bangladesh.',
         dateJoined: new Date('2020-09-17T00:00:00.000Z')
