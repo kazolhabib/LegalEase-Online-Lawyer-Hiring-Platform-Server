@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
     if (includeUnpublished !== 'true') {
       filterQuery.isVerified = true;
       filterQuery.isPublished = true;
+      filterQuery.status = { $ne: 'Busy' };
     }
 
     // Direct Specialization Filter
