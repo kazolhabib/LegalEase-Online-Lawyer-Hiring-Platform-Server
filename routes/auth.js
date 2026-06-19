@@ -100,7 +100,7 @@ router.post('/login', async (req, res) => {
 });
 
 // @route   POST api/auth/google
-// @desc    Google OAuth login/register callback handler
+// @desc  Google OAuth login/register callback handler
 // @access  Public
 router.post('/google', async (req, res) => {
   const { idToken } = req.body;

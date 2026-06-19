@@ -375,6 +375,8 @@ const seedData = async () => {
         image: lawData.image,
         reviewsCount: lawData.reviewsCount,
         ratingAverage: lawData.ratingAverage,
+        isVerified: true,
+        isPublished: true,
         dateJoined: lawData.dateJoined
       });
       await profile.save();
