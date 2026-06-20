@@ -29,7 +29,7 @@ const seedData = async () => {
 
     // Create Test Client
     const clientUser = new User({
-      name: 'Kazi Client',
+      name: 'Client',
       email: 'client@gmail.com',
       password: defaultPassword,
       role: 'user',
@@ -40,7 +40,7 @@ const seedData = async () => {
 
     // Create Test Admin
     const adminUser = new User({
-      name: 'Kazi Admin',
+      name: 'Admin',
       email: 'admin@gmail.com',
       password: defaultPassword,
       role: 'admin',
