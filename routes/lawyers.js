@@ -18,7 +18,8 @@ router.get('/', async (req, res) => {
     if (includeUnpublished !== 'true') {
       filterQuery.isVerified = true;
       filterQuery.isPublished = true;
-      filterQuery.status = { $ne: 'Busy' };
+      // Do not hide busy lawyers from search, just display them with "Busy" badge
+      // filterQuery.status = { $ne: 'Busy' };
     }
 
     // Direct Specialization Filter
