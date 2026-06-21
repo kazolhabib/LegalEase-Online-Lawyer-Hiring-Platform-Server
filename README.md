@@ -2,7 +2,7 @@
 
 The backend REST API for the **LegalEase – Online Lawyer Hiring Platform**. Built with Express.js and MongoDB, it provides secure JWT authentication, role-based access control, lawyer management, hiring workflows, Stripe payment integration, and admin analytics.
 
-🔗 **Live API URL:** [https://legalease-server.onrender.com](https://legalease-server.onrender.com)
+**Live Backend:** [https://legalease-online-lawyer-hiring-platform.onrender.com/](https://legalease-online-lawyer-hiring-platform.onrender.com/)
 
 ---
 
@@ -78,38 +78,7 @@ The backend REST API for the **LegalEase – Online Lawyer Hiring Platform**. Bu
 
 ---
 
-## Getting Started
-
-```bash
-git clone https://github.com/kazolhabib/LegalEase-Online-Lawyer-Hiring-Platform-Server.git
-cd LegalEase-Online-Lawyer-Hiring-Platform-Server
-npm install
-```
-
-Create a `.env` file:
-
-```env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-PORT=5001
-STRIPE_SECRET_KEY=your_stripe_secret_key (optional)
-```
-
-Run the development server:
-
-```bash
-npm run dev
-```
-
----
-
 ## Links
 
 - **Client Repository:** [GitHub – Client](https://github.com/kazolhabib/LegalEase-Online-Lawyer-Hiring-Platform)
 - **Server Repository:** [GitHub – Server](https://github.com/kazolhabib/LegalEase-Online-Lawyer-Hiring-Platform-Server)
-
----
-
-## License
-
-This project is licensed under the ISC License.
